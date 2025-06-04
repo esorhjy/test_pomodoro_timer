@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+	<link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiC8OwcAJZiDr6QcpcwM0Sry9fBhNkXPoEkgK3RoTalxsbSreKAwI1ttawovPaih3LJmxFS3ph0yqYYW_DCKvaOd6edxNGyz21EKUk6yAdZu6up573pMtwNo3ecJTkqLch9E1DKlRt9IzeCUs-kBGcGYa7PQnmOachvy-YT6SfEIXtIWDy8_xw/s1600/533tomato_100803.ico">
+<audio id="alert-sound" src="audio/Hopeful Freedom - Asher Fulero.mp3" preload="auto"></audio>
+ 
+ <title>電腦玩物的番茄鐘</title>
+<style>
+    /* CSS 代碼將放在這裡 */
+
+body {
+  font-family: 'Noto Sans TC', Arial, sans-serif;
+  text-align: center;
+}
+
+body {
+  background-image: url("https://source.unsplash.com/random/featured/?nature");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  font-family: 'Noto Sans TC', Arial, sans-serif;
+}
+
+h1, h2, #timer {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 10px 20px; /* 在左右兩側添加更多的 padding */
+  border-radius: 5px;
+  display: block; /* 改為 display: block; */
+  width: fit-content; /* 設置寬度為 fit-content，以適應內容 */
+  margin-left: auto; /* 水平居中 */
+  margin-right: auto;
+}
+
+
+
+#timer {
+  font-size: 64px;
+  font-weight: bold;
+}
+
+@keyframes colorChange {
+  0% {
+    color: #db4c3f;
+  }
+  50% {
+    color: #4a4a4a;
+  }
+  100% {
+    color: #db4c3f;
+  }
+}
+
+#timer {
+  animation: colorChange 60s linear infinite;
+}
+
+
+button {
+  font-size: 24px;
+  margin: 5px;
+}
+
+#time-input {
+  width: 80px;
+  text-align: center;
+  font-size: 18px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+
+#task-input {
+  font-size: 24px;
+}
+#task-input {
+  font-size: 24px;
+  height: 40px;
+}
+
+.add-task-button {
+  white-space: nowrap;
+  width: 80px; /* 設定固定寬度 */
+  flex-grow: 0; /* 移除從 #task-form button 複製過來的這行 */
+}
+
+
+li {
+  font-size: 20px;
+}
+
+li .completed {
+  text-decoration: line-through;
+  background-color: #eee;
+  color: #aaa;
+  border-color: #aaa;
+}
+
+#task-list {
+  list-style-position: inside;
+  text-align: center;
+  padding-left: 0;
+}
+
+.task-checkbox {
+  appearance: none;
+  background-color: #ffffff;
+  border: 2px solid #4a4a4a;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  outline: none;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.task-checkbox:checked {
+  background-color: #db4c3f;
+  border-color: #db4c3f;
+}
+
+.task-checkbox:checked:after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 12px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  position: relative;
+  top: 1px;
+  left: 5px;
+}
+
+
+.task-text {
+  display: inline;
+  vertical-align: middle;
+}
+
+
+/* 全域樣式 */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 媒體查詢 */
+@media (max-width: 768px) {
+    #timer {
+        font-size: 32px;
+    }
+
+    button {
+        font-size: 18px;
+        padding: 8px;
+        margin: 4px;
+    }
+
+    #task-input {
+        width: 100%;
+    }
+
+    #task-form button {
+        width: 100%;
+        margin-top: 10px;
+		flex-grow: 0;
+    }
+}
+
+body {
+  background-color: #f5f5f5;
+  color: #4a4a4a;
+}
+
+h1, h2 {
+  color: #db4c3f;
+}
+
+button {
+  background-color: #db4c3f;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #c34130;
+}
+
+button[type="submit"] {
+  background-color: #4a4a4a;
+}
+
+button[type="submit"]:hover {
+  background-color: #3a3a3a;
+}
+
+#task-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+	max-width: 500px; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+#task-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px;
+  font-size: 24px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  flex-grow: 1;
+}
+
+#task-list {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+#task-list {
+  list-style-type: none;
+}
+
+
+li {
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+li.completed {
+  background-color: #eee;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+	<h1>電腦玩物的番茄鐘</h1>
+	<div id="timer">25:00</div>
+	<button id="start">開始</button>
+	<button><input type="text" id="time-input" placeholder="MM:SS" /></button>
+	<button id="reset">重置</button>
+
+	<h2 id="positive-message">電腦玩物Esor的今日待辦清單</h2>
+	<form id="task-form">
+		<input type="text" id="task-input" placeholder="輸入待辦事項">
+		<button type="submit" class="add-task-button">添加</button>
+	</form>
+	<ul id="task-list">
+		<!-- 將在這裡插入待辦事項 -->
+	</ul>
+	<button id="clear-tasks">清空所有待辦事項</button>
+  <script>
+  const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    // JavaScript 代碼將放在這裡
+	let countdown;
+const timerDisplay = document.querySelector('#timer');
+const startButton = document.querySelector('#start');
+const resetButton = document.querySelector('#reset');
+
+startButton.addEventListener('click', startTimer);
+resetButton.addEventListener('click', resetTimer);
+
+function startTimer() {
+  document.title = '電腦玩物的番茄鐘';
+  clearInterval(countdown);
+
+  var timerInput = document.getElementById("time-input");
+  var inputTime = timerInput.value.split(":");
+  var durationInSeconds = 25 * 60;
+  
+  if (inputTime.length === 2) {
+    var inputMinutes = parseInt(inputTime[0], 10);
+    var inputSeconds = parseInt(inputTime[1], 10);
+    if (!isNaN(inputMinutes) && !isNaN(inputSeconds)) {
+      durationInSeconds = inputMinutes * 60 + inputSeconds;
+    }
+  }
+
+  const endTime = Date.now() + durationInSeconds * 1000;
+
+  countdown = setInterval(() => {
+    const remainingTime = Math.round((endTime - Date.now()) / 1000);
+    if (remainingTime < 0) {
+      clearInterval(countdown);
+	  countdownFinished();
+      return;
+    }
+    displayTime(remainingTime);
+  }, 1000);
+}
+
+
+
+
+function resetTimer() {
+  document.title = '電腦玩物的番茄鐘';
+  clearInterval(countdown);
+  displayTime(25 * 60);
+}
+
+function displayTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  timerDisplay.textContent = `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+}
+
+resetTimer();
+
+const taskForm = document.querySelector('#task-form');
+const taskInput = document.querySelector('#task-input');
+const taskList = document.querySelector('#task-list');
+const clearTasksButton = document.querySelector('#clear-tasks');
+
+taskForm.addEventListener('submit', addTask);
+taskList.addEventListener('click', toggleTaskCompletion);
+clearTasksButton.addEventListener('click', clearTasks);
+
+function addTask(event) {
+	event.preventDefault();
+
+	if (taskInput.value.trim() === '') {
+		alert('請輸入待辦事項');
+		return;
+	}
+
+	const listItem = createTaskItem(taskInput.value);
+	taskList.appendChild(listItem);
+
+	storedTasks.push(taskInput.value);
+	localStorage.setItem('tasks', JSON.stringify(storedTasks));
+
+  taskInput.value = '';
+}
+
+function createTaskItem(taskTextContent) {
+	const listItem = document.createElement('li');
+
+	const checkbox = document.createElement('input');
+	checkbox.type = 'checkbox';
+	checkbox.className = 'task-checkbox';
+	listItem.appendChild(checkbox);
+
+	const taskText = document.createElement('span');
+	taskText.className = 'task-text';
+	taskText.textContent = taskTextContent;
+	listItem.appendChild(taskText);
+
+	return listItem;
+}
+
+function toggleTask(event) {
+  if (event.target.classList.contains('task-text')) {
+    event.target.classList.toggle('completed');
+  }
+}
+
+function toggleTaskCompletion(event) {
+	if (event.target.classList.contains('task-checkbox')) {
+		const taskText = event.target.nextElementSibling;
+		const listItem = event.target.parentElement;
+		listItem.classList.toggle('completed');
+
+		const taskIndex = storedTasks.indexOf(taskText.textContent);
+		if (taskIndex !== -1) {
+			storedTasks.splice(taskIndex, 1);
+			localStorage.setItem('tasks', JSON.stringify(storedTasks));
+		}
+	}
+	}
+
+function countdownFinished() {
+    // ... 現有的代碼
+    document.title = '時間到了！';
+    
+    const alertSound = document.getElementById('alert-sound');
+    alertSound.play();
+
+    setTimeout(() => {
+        alert('時間到了！休息一下吧！');
+        stopAlertSound();
+    }, 10000); // 延遲 100 毫秒以允許音效播放
+	resetTimer();
+
+    if (Notification.permission === 'granted') {
+        const notification = new Notification('番茄鐘', {
+            body: '時間到了！休息一下吧！',
+        });
+    }
+}
+
+function stopAlertSound() {
+    const alertSound = document.getElementById('alert-sound');
+    alertSound.pause();
+    alertSound.currentTime = 0;
+}
+
+function clearTasks() {
+		while (taskList.firstChild) {
+			taskList.removeChild(taskList.firstChild);
+		}
+		localStorage.removeItem('tasks');
+	}
+
+	// Render existing tasks from localStorage
+	storedTasks.forEach(task => {
+		const listItem = createTaskItem(task);
+		taskList.appendChild(listItem);
+	});
+
+// 隨機選擇正向話語的函數
+function getRandomPositiveMessage() {
+    const messages = [
+    '成為改變的原因。',
+    '做一個決定，並讓它變得美好。',
+    '勇敢是恐懼之後的一分鐘。',
+    '夢想是通往未來的秘密通道。',
+    '勝利屬於最堅持的人。',
+    '成功是堅持走自己選擇的路。',
+    '實力塑造性格，困境考驗實力。',
+    '您可以做任何事，但不能做所有事。',
+    '改變我們不能接受的，接受我們不能改變的。',
+    '唯有經歷風雨，方能見彩虹。',
+    '不要等待機會，而要創造機會。',
+    '自信是成功的第一秘訣。',
+    '勇往直前，您會取得成功。',
+    '您的時間是有限的，不要浪費在別人的生活上。',
+    '每天都是一個新的開始。',
+    '只有越過恐懼的高峰，才能找到勇氣。',
+    '勇敢地面對每一個困難，您將變得更加堅強。',
+    '成功與否，取決於您如何把握自己的命運。',
+    '抓住每一個機會，讓它成為您的優勢。',
+    '相信自己，您可以戰勝一切。',
+    '您所學的一切都是有價值的。',
+    '不要放棄，總有方法可以解決問題。',
+    '堅持不懈，直到成功。',
+    '用行動來改變自己的未來。',
+    '成就是源於克服困難的決心。',
+    '不要害怕失敗，它是通往成功的道路。',
+    '人生就是一個學習的過程。',
+    '善待自己，善待他人。',
+    '始終保持積極的心態。',
+    '永遠相信，美好的事情即將發生。',
+    '機會只偏愛那些有準備的人。',
+    '您的態度決定您的高度。',
+    '追求卓越，成功自然來。',
+    '不要害怕改變，改變是成長的必經之路。',
+    '堅持自己的信念，努力去實現。',
+	'把每一個困難當作挑戰，並勇敢面對。',
+    '不要因為別人的評價而放棄自己。',
+    '行動勝過言語，讓您的努力傳遞價值。',
+    '成功的路上沒有捷徑，只有堅持和努力。',
+    '永遠不要低估自己的潛力。',
+    '從今天開始，成為自己生命中的英雄。',
+    '擁抱挑戰，您會變得更加堅強。',
+    '不要害怕犯錯，每次犯錯都是成長的機會。',
+    '努力，直到您的夢想成真。',
+    '心懷感激，您的生活將充滿喜悅。',
+    '人生中最大的風險，就是不去冒險。',
+    '每個人都有無限的潛力，去挖掘它吧。',
+    '珍惜每一刻，讓生活變得更加美好。',
+    '您的努力不會白費，堅持就是勝利。',
+    '做最好的自己，世界會因您而美好。',
+    '不要把自己局限在別人的期望之中，勇敢追求自己的目標。',
+    '經歷過困難，才能更好地欣賞美好。',
+    '勇敢地面對未知，您會發現新的機遇。',
+    '只要心中有夢想，就不會迷失方向。',
+    '把握當下，珍惜每一次機遇。'
+        // 在此添加更多正向話語
+    ];
+
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    return messages[randomIndex];
+}
+
+// 在頁面載入時，替換標題文本
+window.addEventListener('DOMContentLoaded', () => {
+    const messageElement = document.getElementById('positive-message');
+    messageElement.textContent = getRandomPositiveMessage();
+});
+
+
+	</script>
+    </div>
+</body>
+
+</html>
